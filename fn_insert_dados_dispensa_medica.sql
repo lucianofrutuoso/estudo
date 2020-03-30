@@ -6,6 +6,7 @@
 	- INSERT cod_sessao_encerramento := cod_sessao
 	- Turno vespertino = T
 	- dsc_parecer é a obervação outros
+	- flg_bloqueado
 */
 
 
@@ -256,7 +257,8 @@ BEGIN
 		flg_parecer_pendente,
 		qtd_duracao_restricao, 
 		dat_inicio_restricao, 
-		flg_turno
+		flg_turno, 
+		flg_bloqueado
 	)
 	VALUES 
 	( 
@@ -275,7 +277,8 @@ BEGIN
 		flgg_parecerpendente,
 		qtd_dias_afastamento::integer, 
 		CAST(dat_inicio_afastamento AS date),
-		flgg_turno
+		flgg_turno,
+		FALSE
 	)RETURNING tb_parecer_medico.cod_parecer_medico INTO codd_parecer;
 	
 	/*GERANDO A ATA DE INSPEÇÃO*/	
@@ -320,8 +323,8 @@ BEGIN
 		cod_paciente, 
 		codd_sessao, 
 		dat_atendimento, 
-		NULL, 
-		NULL,
+		FALSE, 
+		FALSE,
 		check_insert
 	);	
 
@@ -346,13 +349,15 @@ BEGIN
 		(
 			cod_parecer_medico,
 			cod_pessoa_servidor,
-			dsc_observacoes			
+			dsc_observacoes,
+			flg_bloqueado
 		)
 		VALUES
 		(
 			codd_parecer,
 			cod_servidor,
-			obss_parecer
+			obss_parecer,
+			FALSE
 		);
 		
 	END IF;
