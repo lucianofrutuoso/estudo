@@ -2,6 +2,10 @@
 	V28.03.20
 	- INSERT tb_parecer_cid;
 	- INSERT tb_observacao_parecer;
+	V30.03.20
+	- INSERT cod_sessao_encerramento := cod_sessao
+	- Turno vespertino = T
+	- dsc_parecer é a obervação outros
 */
 
 
@@ -201,7 +205,7 @@ BEGIN
 	/* GERA O TURNO */
 	CASE	
 		WHEN current_time BETWEEN '00:00:00' AND '11:59:59' THEN flgg_turno := 'M';
-		ELSE  flgg_turno := 'V';
+		ELSE  flgg_turno := 'T';
 	END CASE;
 	
 	/* GERA O CÓDIGO DO DIAGNOSTICO */
@@ -240,6 +244,7 @@ BEGIN
 		cod_medico_perito,
 		cod_criador_registro, 
 		cod_sessao,
+		cod_sessao_encerramento,
 		dat_criacao,  
 		dsc_parecer, 
 		flg_apto, 
@@ -257,7 +262,8 @@ BEGIN
 	( 
 		cod_servidor,
 		cod_servidor, 
-		codd_sessao, 
+		codd_sessao,
+		codd_sessao,
 		now(), 
 		upper(dscc_parecer), 
 		flgg_apto,-- integer
@@ -395,12 +401,12 @@ GRANT EXECUTE ON FUNCTION dbsingular_requerimento.fn_insert_dados_dispensa_medic
 /*
 SELECT dbsingular_requerimento.fn_insert_dados_dispensa_medica(
 	'1521474', 
-	'2020-03-24', 
+	'2020-03-30', 
 	FALSE, 
 	'LTSP)', 
 	'67006949149', 
 	'LTSP)', 
-	'2020-03-24', 
+	'2020-03-30', 
 	15, 
 	'INCAPAZ TEMPORARIAMENTE para o serviço do CBMDF',
 	'A009',
