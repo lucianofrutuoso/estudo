@@ -258,7 +258,10 @@ BEGIN
 		qtd_duracao_restricao, 
 		dat_inicio_restricao, 
 		flg_turno, 
-		flg_bloqueado
+		flg_bloqueado,
+		flg_validado_secretaria,
+		flg_doc_sanitario_origem,
+		flg_impresso_definitivo		
 	)
 	VALUES 
 	( 
@@ -278,6 +281,9 @@ BEGIN
 		qtd_dias_afastamento::integer, 
 		CAST(dat_inicio_afastamento AS date),
 		flgg_turno,
+		FALSE,
+		FALSE,
+		FALSE,
 		FALSE
 	)RETURNING tb_parecer_medico.cod_parecer_medico INTO codd_parecer;
 	
